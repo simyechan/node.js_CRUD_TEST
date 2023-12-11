@@ -1,3 +1,3 @@
 # node.js_CRUD_TEST
 
-ㅌㅊㅍ호ㅓ
+node.js CRUD 연습용
