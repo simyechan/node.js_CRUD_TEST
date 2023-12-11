@@ -3,7 +3,7 @@ const multer = require("multer");
 const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const db = require("./db/db.js");
+const db = require("./db.js");
 
 const app = express();
 const conn = db.init();
