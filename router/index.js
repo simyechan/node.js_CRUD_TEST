@@ -22,7 +22,7 @@ const upload = multer({
     }),
 });
 
-app.set("post", process.env.PORT || 3030);
+app.set("port", process.env.PORT || 3030);
 app.set("host", process.env.HOST || "0.0.0.0");
 
 app.use(cors());
@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // 게시글 목록 보기
-app.get("/view", function (req, res) {
+app.get("/view", (req, res) => {
     var sql = "select * from board";
     conn.query(sql, function (err, result) {
         if (err) console.log("query is not excuted: " + err);
@@ -39,7 +39,7 @@ app.get("/view", function (req, res) {
 });
 
 // 게시글 작성
-app.post("/insert", upload.single("img"), function (req, res) {
+app.post("/insert", upload.single("img"), (req, res) => {
     var body = req.body;
     var sql = "SELECT count(*)+1 as bnum FROM board ";
     conn.query(sql, function (err, result) {
@@ -63,7 +63,7 @@ app.post("/insert", upload.single("img"), function (req, res) {
 });
 
 // 게시글 보기
-app.get("/read/:bnum", function (req, res) {
+app.get("/read/:bnum", (req, res) => {
     var sql = "select * from board where bnum=" + req.params.bnum;
     conn.query(sql, function (err, result) {
         if (err) console.log("query is not excuted: " + err);
@@ -72,7 +72,7 @@ app.get("/read/:bnum", function (req, res) {
 });
 
 // 게시글 수정
-app.post("/update/:bnum", function (req, res) {
+app.post("/update/:bnum", (req, res) => {
     var body = req.body;
     var sql = "update board set id=?, title=?, content=? where bnum=" + req.params.bnum;
     var params = [body.id, body.title, body.content];
@@ -83,7 +83,7 @@ app.post("/update/:bnum", function (req, res) {
 });
 
 // 게시글 삭제
-app.get("/delete/:bnum", function (req, res) {
+app.get("/delete/:bnum", (req, res) => {
     var sql = "delete from board where bnum=" + req.params.bnum;
     conn.query(sql, function (err) {
         if (err) console.log("query is not excuted: " + err);
@@ -92,7 +92,7 @@ app.get("/delete/:bnum", function (req, res) {
 });
 
 // 이미지 파일 불러오기
-app.get("/img/:bnum", function (req, res) {
+app.get("/img/:bnum", (req, res) => {
     var sql = "select * from file where bnum=" + req.params.bnum;
     conn.query(sql, function (err, result) {
         if (err) console.log("query is not excuted: " + err);
@@ -105,8 +105,8 @@ app.get("/img/:bnum", function (req, res) {
     });
 });
 
-app.listen(app.get("port"), app.get("host"), () => 
+app.listen(app.get("port"), app.get("host"), () => {
     console.log(
         "Server is running on : " + app.get("host") + ":" + app.get("port")
     )
-);
+});
